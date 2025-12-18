@@ -3,126 +3,694 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Quiz Jujutsu Kaisen – Completo</title>
+<title>Quiz Jujutsu Kaisen</title>
 <style>
-:root{--bg:#020617;--card:#0f172a;--accent:#38bdf8;--ok:#22c55e;--err:#ef4444}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#020617,#020617 40%,#020617);color:#e5e7eb}
-.container{max-width:820px;margin:24px auto;padding:16px}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.h1{font-size:28px;font-weight:800}
-.badge{padding:6px 10px;border-radius:999px;background:#0b1220;border:1px solid #1f2937}
-.card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn{background:#0b1220;border:1px solid #1f2937;color:#e5e7eb;padding:12px;border-radius:12px;cursor:pointer;font-weight:600}
-.btn.primary{background:var(--accent);border:none;color:#020617}
-.btn.warn{background:#111827;border:1px dashed #374151}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.answers{display:grid;gap:10px;margin-top:12px}
-.answer{background:#020617;border:1px solid #1f2937;border-radius:12px;padding:12px;text-align:left;cursor:pointer}
-.answer.correct{border-color:var(--ok)}
-.answer.wrong{border-color:var(--err)}
-.footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-.timer{font-weight:800}
-.scoreboard{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
-.pill{background:#020617;border:1px solid #1f2937;border-radius:999px;padding:8px;text-align:center}
-.hidden{display:none}
-.small{opacity:.8;font-size:12px}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
+
+:root {
+  --bg-primary: #0a0118;
+  --bg-secondary: #1a0b2e;
+  --card-bg: rgba(26, 11, 46, 0.8);
+  --accent: #b026ff;
+  --accent-glow: rgba(176, 38, 255, 0.4);
+  --success: #00ff88;
+  --error: #ff1744;
+  --text: #ffffff;
+  --text-dim: #a8a8d8;
+  --border: rgba(176, 38, 255, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 50%, #16051f 100%);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, var(--accent-glow) 0%, transparent 50%);
+  opacity: 0.3;
+  animation: pulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.1); opacity: 0.5; }
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #b026ff 0%, #ff006e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px var(--accent-glow);
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.mode-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(176, 38, 255, 0.2);
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px var(--accent-glow);
+  animation: fadeInUp 0.8s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.card:hover::before {
+  opacity: 0.1;
+}
+
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  background: rgba(26, 11, 46, 0.6);
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent) 0%, #ff006e 100%);
+  border: none;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.btn.primary:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px var(--accent-glow);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.question-container {
+  margin-bottom: 2rem;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.difficulty {
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.diff-facil { background: rgba(0, 255, 136, 0.2); color: var(--success); }
+.diff-medio { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+.diff-dificil { background: rgba(255, 87, 34, 0.2); color: #ff5722; }
+.diff-hardcore { background: rgba(255, 23, 68, 0.2); color: var(--error); }
+
+.question-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.player-turn {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.answers-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.answer-btn {
+  padding: 1.2rem;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  background: rgba(10, 1, 24, 0.6);
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.answer-btn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.answer-btn:hover::before {
+  transform: scaleY(1);
+}
+
+.answer-btn:hover {
+  border-color: var(--accent);
+  background: rgba(176, 38, 255, 0.1);
+  transform: translateX(8px);
+}
+
+.answer-btn.correct {
+  border-color: var(--success);
+  background: rgba(0, 255, 136, 0.15);
+  animation: correctPulse 0.6s ease;
+}
+
+.answer-btn.wrong {
+  border-color: var(--error);
+  background: rgba(255, 23, 68, 0.15);
+  animation: shake 0.5s ease;
+}
+
+@keyframes correctPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--border);
+}
+
+.timer {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timer.warning {
+  color: var(--error);
+  animation: timerPulse 0.5s ease infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--border);
+}
+
+.player-card {
+  background: rgba(10, 1, 24, 0.6);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.player-card.active {
+  border-color: var(--accent);
+  background: rgba(176, 38, 255, 0.15);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: scale(1.05);
+}
+
+.player-name {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 0.3rem;
+}
+
+.player-score {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+.description {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    font-size: 2rem;
+  }
+  
+  .mode-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .scoreboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .question-text {
+    font-size: 1.2rem;
+  }
+}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <div class="h1">Quiz Jujutsu Kaisen</div>
-    <div class="badge" id="modeBadge">Modo: Seleção</div>
+    <div class="logo">⚡ JUJUTSU KAISEN</div>
+    <div class="subtitle">Teste seus conhecimentos sobre feiticeiros e maldições</div>
+    <div class="mode-badge" id="modeBadge">Selecione um Modo</div>
   </div>
 
   <div class="card" id="menu">
-    <h3>Escolha o modo</h3>
-    <div class="row">
-      <button class="btn primary" onclick="start('tempo')">⏱️ Com Tempo</button>
-      <button class="btn primary" onclick="start('eliminatorio')">🎯 Eliminatório</button>
-      <button class="btn" onclick="start('show')">🎮 Show do Milhão</button>
-      <button class="btn warn" onclick="start('hardcore')">⚔️ Hardcore (Mangá)</button>
+    <h2 style="margin-bottom: 1rem; font-size: 1.8rem;">Escolha seu Desafio</h2>
+    <div class="mode-grid">
+      <button class="btn primary" onclick="start('tempo')">
+        <span>⏱️ Contra o Tempo</span>
+      </button>
+      <button class="btn primary" onclick="start('eliminatorio')">
+        <span>🎯 Eliminatório</span>
+      </button>
+      <button class="btn" onclick="start('show')">
+        <span>🎮 Show do Milhão</span>
+      </button>
+      <button class="btn" onclick="start('hardcore')">
+        <span>⚔️ Modo Hardcore</span>
+      </button>
     </div>
-    <p class="small">Inclui placar automático (4 participantes), cronômetro e perguntas do anime + mangá.</p>
+    <div class="description">
+      🎯 <strong>Contra o Tempo:</strong> 10 segundos por pergunta<br>
+      🎯 <strong>Eliminatório:</strong> Erre e está fora!<br>
+      🎯 <strong>Show do Milhão:</strong> Sem pressão de tempo<br>
+      🎯 <strong>Hardcore:</strong> Perguntas do mangá + 15 segundos
+    </div>
   </div>
 
   <div class="card hidden" id="game">
-    <div id="q"></div>
-    <div class="answers" id="answers"></div>
-    <div class="footer">
-      <div class="timer" id="timer"></div>
-      <button class="btn" onclick="next()">Próxima</button>
+    <div class="question-container">
+      <div class="question-header">
+        <div class="difficulty" id="difficulty"></div>
+        <div class="timer" id="timer"></div>
+      </div>
+      <div class="question-text" id="questionText"></div>
+      <div class="player-turn" id="playerTurn"></div>
     </div>
+    
+    <div class="answers-grid" id="answers"></div>
+    
+    <div class="footer">
+      <button class="btn" onclick="showMenu()">
+        <span>↩️ Menu</span>
+      </button>
+      <button class="btn primary" onclick="next()">
+        <span>Próxima ➔</span>
+      </button>
+    </div>
+    
     <div class="scoreboard" id="board"></div>
   </div>
 </div>
 
 <script>
-// Perguntas (fácil → hardcore)
 const QUESTIONS = [
- {lvl:'f',q:'Quem é o protagonista?',a:['Yuji Itadori','Gojo Satoru','Megumi','Yuta'],c:0},
- {lvl:'m',q:'Qual a técnica de Megumi?',a:['Ilimitado','Dez Sombras','Ressonância','Sangue'],c:1},
- {lvl:'m',q:'Quem selou Gojo em Shibuya?',a:['Sukuna','Mahito','Kenjaku','Jogo'],c:2},
- {lvl:'d',q:'Qual é o domínio de Sukuna?',a:['Jardim das Sombras','Santuário Demoníaco','Domínio Infinito','Trono'],c:1},
- {lvl:'h',q:'Por que o domínio de Sukuna é dito “divino”?',a:['É incompleto','Não cria barreira','Usa energia reversa','Precisa de dois usuários'],c:1},
- {lvl:'h',q:'Quem possibilitou a libertação completa de Sukuna?',a:['Yuji','Gojo','Megumi','Kenjaku'],c:2}
+  // Fácil
+  {lvl:'f',q:'Quem é o protagonista de Jujutsu Kaisen?',a:['Yuji Itadori','Gojo Satoru','Megumi Fushiguro','Yuta Okkotsu'],c:0},
+  {lvl:'f',q:'Qual maldição Yuji consumiu?',a:['Sukuna','Mahito','Jogo','Hanami'],c:0},
+  {lvl:'f',q:'Quem é o professor mais forte?',a:['Nanami','Gojo Satoru','Kusakabe','Mei Mei'],c:1},
+  {lvl:'f',q:'Qual é a técnica inata de Nobara?',a:['Palha e Martelo','Sombras','Manipulação de Sangue','Ressonância'],c:0},
+  {lvl:'f',q:'Qual é a escola rival da Tokyo Jujutsu High?',a:['Osaka','Kyoto','Hiroshima','Nagoya'],c:1},
+  
+  // Médio
+  {lvl:'m',q:'Qual a técnica inata de Megumi Fushiguro?',a:['Técnica Ilimitada','Técnica das Dez Sombras Divinas','Manipulação de Sangue','Projeção Maldita'],c:1},
+  {lvl:'m',q:'Quem é o usuário da técnica "Idle Transfiguration"?',a:['Jogo','Mahito','Hanami','Dagon'],c:1},
+  {lvl:'m',q:'Qual é o nome do domínio de Gojo?',a:['Vazio Ilimitado','Santuário Demoníaco','Domínio Infinito','Jardim das Sombras'],c:0},
+  {lvl:'m',q:'Quem selou Gojo Satoru no incidente de Shibuya?',a:['Sukuna','Mahito','Kenjaku (Pseudo-Geto)','Jogo'],c:2},
+  {lvl:'m',q:'Qual é a energia maldita especial de Yuta Okkotsu?',a:['Rika','Tamamo','Sukuna','Cursed Speech'],c:0},
+  {lvl:'m',q:'Quem matou Junpei Yoshino?',a:['Sukuna','Mahito','Jogo','Geto'],c:1},
+  {lvl:'m',q:'Qual feiticeiro usa a técnica "Boogie Woogie"?',a:['Todo Aoi','Mechamaru','Panda','Inumaki'],c:0},
+  
+  // Difícil
+  {lvl:'d',q:'Qual é o nome completo do domínio de Sukuna?',a:['Jardim das Sombras Divinas','Santuário Demoníaco Fūma','Vazio Malévolo','Trono do Caos'],c:1},
+  {lvl:'d',q:'Quantos dedos de Sukuna existem no total?',a:['15','20','25','10'],c:1},
+  {lvl:'d',q:'Qual técnica Gojo usa para teletransporte?',a:['Técnica Reversa','Azul','Roxo','Vermelho'],c:1},
+  {lvl:'d',q:'Quem foi o primeiro feiticeiro a usar Expansão de Domínio na série?',a:['Gojo','Sukuna','Jogo','Mahito'],c:2},
+  {lvl:'d',q:'Qual é a restrição celestial de Maki Zenin?',a:['Zero energia maldita','Energia maldita tripla','Energia reversa permanente','Visão maldita'],c:0},
+  {lvl:'d',q:'Quem criou os Cursed Corpses?',a:['Principal Yaga','Gojo','Tengen','Kenjaku'],c:0},
+  
+  // Hardcore (Mangá)
+  {lvl:'h',q:'Por que o domínio de Sukuna é considerado "divino"?',a:['É completo e perfeito','Não cria barreira, apenas aplica efeito','Usa energia reversa','Precisa de dois usuários'],c:1},
+  {lvl:'h',q:'Qual feiticeiro do passado tinha técnica similar à de Gojo?',a:['Uro Takako','Ryu Ishigori','Suguru Geto','Limitless User do Clã Gojo'],c:3},
+  {lvl:'h',q:'Quem possibilitou a libertação completa de Sukuna?',a:['Yuji','Gojo','Megumi Fushiguro','Kenjaku'],c:2},
+  {lvl:'h',q:'Qual é a verdadeira identidade de Kenjaku?',a:['Um feiticeiro de 1000 anos','Um espírito maldito','Uma técnica viva','Um parasita maldito'],c:0},
+  {lvl:'h',q:'O que acontece quando Yuji usa "Black Flash" consecutivamente?',a:['Aumenta velocidade','Entra na "zona"','Cura ferimentos','Dobra energia maldita'],c:1},
+  {lvl:'h',q:'Qual é o verdadeiro objetivo de Tengen?',a:['Proteger o Japão','Fundir-se com humanos','Manter barreiras','Eliminar maldições'],c:2},
+  {lvl:'h',q:'Quantas técnicas Sukuna demonstrou ter até agora?',a:['2','4','6','8+'],c:3},
+  {lvl:'h',q:'O que "Six Eyes" permite que Gojo faça?',a:['Ver o futuro','Controle perfeito de energia maldita','Ler mentes','Criar ilusões'],c:1}
 ];
 
-let mode='tempo', idx=0, time=10, tInt=null;
-const players=['P1','P2','P3','P4'];
-const score={P1:0,P2:0,P3:0,P4:0};
-let turn=0; // jogador atual
+let mode = 'tempo';
+let idx = 0;
+let time = 10;
+let tInt = null;
+let answered = false;
+const players = ['Jogador 1', 'Jogador 2', 'Jogador 3', 'Jogador 4'];
+const score = {
+  'Jogador 1': 0,
+  'Jogador 2': 0,
+  'Jogador 3': 0,
+  'Jogador 4': 0
+};
+let turn = 0;
+let eliminated = new Set();
 
-const menu=document.getElementById('menu');
-const game=document.getElementById('game');
-const qEl=document.getElementById('q');
-const aEl=document.getElementById('answers');
-const timerEl=document.getElementById('timer');
-const board=document.getElementById('board');
-const badge=document.getElementById('modeBadge');
+const menu = document.getElementById('menu');
+const game = document.getElementById('game');
+const questionText = document.getElementById('questionText');
+const answersEl = document.getElementById('answers');
+const timerEl = document.getElementById('timer');
+const board = document.getElementById('board');
+const badge = document.getElementById('modeBadge');
+const difficulty = document.getElementById('difficulty');
+const playerTurn = document.getElementById('playerTurn');
 
-function start(m){
- mode=m; badge.textContent='Modo: '+m;
- menu.classList.add('hidden'); game.classList.remove('hidden');
- idx=0; turn=0; Object.keys(score).forEach(k=>score[k]=0);
- renderBoard(); load();
+function start(m) {
+  mode = m;
+  const modeNames = {
+    'tempo': '⏱️ Contra o Tempo',
+    'eliminatorio': '🎯 Eliminatório',
+    'show': '🎮 Show do Milhão',
+    'hardcore': '⚔️ Hardcore'
+  };
+  badge.textContent = modeNames[m];
+  
+  menu.classList.add('hidden');
+  game.classList.remove('hidden');
+  
+  idx = 0;
+  turn = 0;
+  eliminated.clear();
+  Object.keys(score).forEach(k => score[k] = 0);
+  
+  if (mode === 'hardcore') {
+    QUESTIONS.sort(() => Math.random() - 0.5);
+  }
+  
+  renderBoard();
+  load();
 }
 
-function load(){
- clearInterval(tInt);
- const cur=QUESTIONS[idx % QUESTIONS.length];
- qEl.innerHTML=`<h3>${cur.q}</h3><p class='small'>Jogador: <b>${players[turn]}</b></p>`;
- aEl.innerHTML='';
- cur.a.forEach((txt,i)=>{
-  const b=document.createElement('button'); b.className='answer'; b.textContent=txt;
-  b.onclick=()=>answer(i,cur.c,b);
-  aEl.appendChild(b);
- });
- if(mode!=='show'){
-  time = mode==='hardcore'?15:10; timerEl.textContent='⏳ '+time+'s';
-  tInt=setInterval(()=>{ time--; timerEl.textContent='⏳ '+time+'s'; if(time<=0){ next(); } },1000);
- } else timerEl.textContent='';
+function showMenu() {
+  game.classList.add('hidden');
+  menu.classList.remove('hidden');
+  badge.textContent = 'Selecione um Modo';
+  clearInterval(tInt);
 }
 
-function answer(i,c,b){
- if(i===c){ b.classList.add('correct'); score[players[turn]]++; }
- else b.classList.add('wrong');
- renderBoard(); setTimeout(next,700);
+function load() {
+  clearInterval(tInt);
+  answered = false;
+  
+  if (mode === 'eliminatorio') {
+    while (eliminated.has(players[turn]) && eliminated.size < players.length) {
+      turn = (turn + 1) % players.length;
+    }
+    
+    if (eliminated.size >= players.length - 1) {
+      const winner = players.find(p => !eliminated.has(p));
+      alert(`🎉 ${winner} venceu o modo Eliminatório!`);
+      showMenu();
+      return;
+    }
+  }
+  
+  const cur = QUESTIONS[idx % QUESTIONS.length];
+  
+  const diffLabels = {
+    'f': '<span class="diff-facil">Fácil</span>',
+    'm': '<span class="diff-medio">Médio</span>',
+    'd': '<span class="diff-dificil">Difícil</span>',
+    'h': '<span class="diff-hardcore">Hardcore</span>'
+  };
+  
+  difficulty.innerHTML = diffLabels[cur.lvl];
+  questionText.textContent = cur.q;
+  playerTurn.innerHTML = `🎯 Vez de: <strong>${players[turn]}</strong>`;
+  
+  answersEl.innerHTML = '';
+  cur.a.forEach((txt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.textContent = txt;
+    btn.onclick = () => answer(i, cur.c, btn);
+    answersEl.appendChild(btn);
+  });
+  
+  if (mode !== 'show') {
+    time = mode === 'hardcore' ? 15 : 10;
+    updateTimer();
+    tInt = setInterval(() => {
+      time--;
+      updateTimer();
+      if (time <= 0) {
+        if (mode === 'eliminatorio' && !answered) {
+          eliminated.add(players[turn]);
+        }
+        next();
+      }
+    }, 1000);
+  } else {
+    timerEl.textContent = '';
+  }
+  
+  renderBoard();
 }
 
-function next(){
- clearInterval(tInt);
- idx++; turn=(turn+1)%players.length;
- load();
+function updateTimer() {
+  timerEl.textContent = `⏱️ ${time}s`;
+  if (time <= 3) {
+    timerEl.classList.add('warning');
+  } else {
+    timerEl.classList.remove('warning');
+  }
 }
 
-function renderBoard(){
- board.innerHTML=''; players.forEach(p=>{
-  const d=document.createElement('div'); d.className='pill'; d.textContent=`${p}: ${score[p]}`;
-  board.appendChild(d);
- });
+function answer(i, c, btn) {
+  if (answered) return;
+  answered = true;
+  
+  clearInterval(tInt);
+  
+  const buttons = document.querySelectorAll('.answer-btn');
+  buttons.forEach(b => b.style.pointerEvents = 'none');
+  
+  if (i === c) {
+    btn.classList.add('correct');
+    score[players[turn]]++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[c].classList.add('correct');
+    
+    if (mode === 'eliminatorio') {
+      eliminated.add(players[turn]);
+    }
+  }
+  
+  renderBoard();
+  setTimeout(next, 1500);
+}
+
+function next() {
+  clearInterval(tInt);
+  idx++;
+  turn = (turn + 1) % players.length;
+  load();
+}
+
+function renderBoard() {
+  board.innerHTML = '';
+  players.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'player-card';
+    if (i === turn && !eliminated.has(p)) {
+      card.classList.add('active');
+    }
+    
+    const name = document.createElement('div');
+    name.className = 'player-name';
+    name.textContent = eliminated.has(p) ? `${p} ❌` : p;
+    
+    const scoreEl = document.createElement('div');
+    scoreEl.className = 'player-score';
+    scoreEl.textContent = score[p];
+    
+    card.appendChild(name);
+    card.appendChild(scoreEl);
+    board.appendChild(card);
+  });
 }
 </script>
 </body>
